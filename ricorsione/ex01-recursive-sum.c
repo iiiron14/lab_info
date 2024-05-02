@@ -1,8 +1,9 @@
 #include <stdio.h>
 
-int somma(int n) {
-    // TODO
-    return -1;
+int somma(int x){
+    if(!x)
+        return 0;
+    return x + somma(x - 1);
 }
 
 int main(void) {

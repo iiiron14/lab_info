@@ -15,9 +15,11 @@
  * elementi.  naturalmente altri schemi erano ugualmente possibili, ad
  * esempio consumando il primo elemento anziche' l'ultimo.
  */
-int evens(int a[], int size) {
-    // TODO
-    return 1;
+int evens(int a[], int n){
+    if(!n)
+        return !(a[n] % 2);
+    // printf("\n%d resto %d", a[n], a[n] % 2);
+    return !(a[n] % 2) + evens(a, n - 1);
 }
 
 int main(void) {

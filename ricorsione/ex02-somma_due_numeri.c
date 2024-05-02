@@ -1,8 +1,11 @@
 #include <stdio.h>
 
-int somma_due_numeri(int x, int y) {
-    // TODO
-    return -1;
+int somma_due_interi( int x, int y ){
+    if(!x)
+        return y;
+    if(!y)
+        return x;
+    return 1 + somma_due_interi(x, y - 1);
 }
 
 int main(void) {
