@@ -2,21 +2,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define POSITIVE 1
+#define NEGATIVE -1
+
 int *palindrome(int n) {
-    void build_array(int *, int, int, int);
+    int sign=POSITIVE;
+    if(n < 0){
+        sign = NEGATIVE;
+        n = n*(-1);
+    }
+    printf("n: %d\n", n);
+    void build_array(int *, int, int, int, int);
     int *r = (int *)malloc((n*2 + 1)*sizeof(int));
 
-    build_array(r, n*2, 0, n);
+    build_array(r, n*2, 0, n, sign);
     return r;
 }
 
-void build_array(int r[], int n, int i, int f){
-    *(r + n) = f;
-    *(r + i) = f;
+void build_array(int r[], int n, int i, int f, int sign){
+    *(r + n) = f*sign;
+    *(r + i) = f*sign;
     if(f == 0)
         return;
-
-    return build_array(r, n-1, i + 1, f - 1);
+    return build_array(r, n-1, i + 1, f - 1, sign);
 }
 
 /**
@@ -37,8 +45,10 @@ void print_array(const int v[], int n) {
 }
 
 int main(void) {
-    const int n = -3;
+    int n = -2;
     int *r = palindrome(n);
+    if(n < 0)
+        n *= NEGATIVE;
     print_array(r, 2 * n + 1);
     printf("\n");
     free(r);

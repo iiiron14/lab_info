@@ -33,6 +33,7 @@
  */
 
 #define COD_SIZE    8
+#define INT_TO_CHAR   48
 
 static char *cod[COD_SIZE] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
@@ -42,22 +43,17 @@ char *t9(char *s) {
     while(*(s + size++) != '\0') ;
     char *str = (char *)malloc(size*sizeof(char));
     code(s, str, 0);
-    *(str + size) = '\0';
-    return str;
+    *(str + size - 1) = '\0'; // I write in the string till string[size - 2], string[size - 1] = '\0'
+    return str;               // the total amount of memory to allocate is size - 1 + 1 = size (because of the zero element)
 }
 
 void code(char *s, char *p, int i){
-    if(*(s + i) == '\0'){
+    if(*(s + i) == '\0')
         return;
-    }
-    for(int j=0; j < COD_SIZE; j++){
-        for(int k=0; *(*cod + k) != '\0'; k++){
-            if(*(s + i) == *(*cod + k)){
-                *(p + i) = j + 2; // rappresenta l'indice di cod aggiustato secondo la codifica
-                printf("*(s + i): %c, *(*cod + k): %c, j+2: %d\n", *(s + i), *(*cod + k), j + 2);
-            }
-        }
-    }
+    for(int j = 0; j < COD_SIZE; j++)
+        for(int k=0; *(cod[j] + k) !='\0'; k++)
+            if(*(s + i) == *(cod[j] + k))
+                *(p + i) = (j + 2 + INT_TO_CHAR);
     code(s, p, i + 1);
 }
 
