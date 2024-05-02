@@ -2,8 +2,12 @@
 #include <stdlib.h>
 
 double mypow(double basis, int exponent) {
-    // TODO
-    return -1;
+    if(!exponent)
+        return 1;
+    else if(exponent > 0)
+        return basis*mypow(basis, exponent - 1);
+    else
+        return (1/basis)*mypow(basis, exponent + 1);
 }
 
 int main(int argc, char *argv[]) {

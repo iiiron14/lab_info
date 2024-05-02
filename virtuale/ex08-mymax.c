@@ -4,8 +4,16 @@
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
 int mymax(int a[], int n) {
-    // TODO (hint: usare la funzione MAX)
-    return -1;
+    int app(int *, int, int);
+    return app(a, 0, n - 1);
+}
+
+int app(int a[], int i, int n){
+    if(i>=n)
+        return MAX(a[i], a[n]);
+    if(a[i] > a[n])
+        return app(a, i, n - 1);
+    return app(a, i + 1, n);
 }
 
 int main(int argc, char *argv[]) {

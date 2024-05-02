@@ -2,8 +2,15 @@
 #include <stdlib.h>
 
 int lcm(int a, int b) {
-    // TODO
-    return -1;
+    int lcm2(int, int, int);
+    int c = (a > b ? a : b);
+    return lcm2(a, b, c);
+}
+
+int lcm2(int a, int b, int c){
+    if(!(c % a) && !(c % b))
+        return c;
+    return lcm2(a, b, c + 1);
 }
 
 int main(int argc, char *argv[]) {

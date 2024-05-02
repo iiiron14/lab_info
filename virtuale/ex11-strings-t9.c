@@ -31,10 +31,36 @@
  *
  * Consiglio: si veda in fondo al file.
  */
+
+#define COD_SIZE    8
+
+static char *cod[COD_SIZE] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
 char *t9(char *s) {
-    // TODO
-    return NULL;
+    void code(char *, char *, int);
+    int size=0;
+    while(*(s + size++) != '\0') ;
+    char *str = (char *)malloc(size*sizeof(char));
+    code(s, str, 0);
+    *(str + size) = '\0';
+    return str;
 }
+
+void code(char *s, char *p, int i){
+    if(*(s + i) == '\0'){
+        return;
+    }
+    for(int j=0; j < COD_SIZE; j++){
+        for(int k=0; *(*cod + k) != '\0'; k++){
+            if(*(s + i) == *(*cod + k)){
+                *(p + i) = j + 2; // rappresenta l'indice di cod aggiustato secondo la codifica
+                printf("*(s + i): %c, *(*cod + k): %c, j+2: %d\n", *(s + i), *(*cod + k), j + 2);
+            }
+        }
+    }
+    code(s, p, i + 1);
+}
+
 
 /**
  ** Non dovrebbe essere necessario modificare la parte seguente

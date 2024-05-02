@@ -37,7 +37,7 @@ void print_array(const int v[], int n) {
 }
 
 int main(void) {
-    const int n = 7;
+    const int n = -3;
     int *r = palindrome(n);
     print_array(r, 2 * n + 1);
     printf("\n");
