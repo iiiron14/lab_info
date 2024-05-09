@@ -80,7 +80,6 @@ struct list *list_create_n(int n) {
     if(!n)
         return NULL;
     struct list *l = (struct list *)malloc(sizeof(struct list));
-    // struct list *m = (struct list *)malloc(sizeof(struct list));
     l->val = --n;
     l->next = NULL;
     while(n>0){
@@ -128,7 +127,15 @@ struct list *nth_element(struct list *L, int n) {
    il primo nodo della lista). SUGGERIMENTO: e' possibile realizzare
    una soluzione ricorsiva oppure iterativa. */
 struct list *list_from_array(int v[], int n) {
-    return NULL;
+    if(!n)
+        return NULL;
+    struct list *l = (struct list *)malloc(sizeof(struct list));
+    l = NULL;
+    while(n>0){
+        n--;
+        l = list_create(v[n], l);
+    }
+    return l;
 }
 
 /* Concatena L2 in coda a L1 e ritorna il puntatore all'inizio della
@@ -155,10 +162,14 @@ struct list *list_concat(struct list *L1, struct list *L2) {
    L. La lista L non deve essere modificata. */
 struct list *list_duplicate(struct list *L) {
     struct list *p = (struct list *)malloc(sizeof(struct list));
-    p->next = NULL; // scrive la lista al contrario
+    struct list *m = (struct list *)malloc(sizeof(struct list));
+
+    m = L;
+    p = m;
     while(L != NULL){
-        p = list_create(L->val, p);
         L = L->next;
+        m->next = L;
+        m = m->next;
     }
     return p;
 }
@@ -166,7 +177,15 @@ struct list *list_duplicate(struct list *L) {
 /* [TODO] Restituisce 1 se e solo se le liste L1 e L2 hanno la stessa
    lunghezza, e contengono gli stessi valori nello stesso ordine; 0
    altrimenti. Questa funzione non deve modificare ne' L1 ne' L2. */
-int list_equal(struct list *L1, struct list *L2) { return -1; }
+int list_equal(struct list *L1, struct list *L2) {
+    while(L1 != NULL){
+        if(L2 == NULL || (L1->val != L2->val))
+            return 0;
+        L1 = L1->next;
+        L2 = L2->next;
+    }
+    return 1;
+}
 
 /* [TODO] Data una lista L (anche vuota), ritorna un puntatore al
    primo nodo della lista ottenuta "rovesciando" L (l'ultimo nodo di L
@@ -179,8 +198,28 @@ int list_equal(struct list *L1, struct list *L2) { return -1; }
    SUGGERIMENTO: lasciare questa funzione per ultima, perche' non e'
    semplice come sembra. Consiglio di risolverla in modo iterativo.
 */
+
+struct list *find_null_node(struct list *l){
+    while(l->next != NULL)
+        l = l->next;
+    return l;
+}
+
 struct list *list_reverse(struct list *L) {
-    return NULL;
+    if(is_empty(L))
+        return NULL;
+    struct list *m = L;
+    struct list *p = NULL;
+    struct list *n = NULL;
+
+    while(m != NULL){
+        p = m->next;
+        m->next = n;
+        n = m;
+        m = p;
+    }
+    L = n;
+    return L;
 }
 
 int main(void) {

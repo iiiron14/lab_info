@@ -1,14 +1,14 @@
 #include <stdio.h>
 
-struct list {
-    int val;
-    struct list *next;
-};
+void funz(char *p){
+    p = "no";
+    printf("\ndentro funzione");
+    return;
+}
 
 int main(){
-    struct list *l = NULL;
-    l->val = 0;
-    l->next = NULL;
-    printf("%d ", l->val);
+    char *p = "prova";
+    funz(p);
+    printf("\n%s", p);
     return 0;
 }

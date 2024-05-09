@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/User/Desktop/uni/lab_info",
-      "program": "C:/Users/edoardo.nori2/Desktop/lab_info/liste/app.c",
+      "cwd": "c:/Users/User/Desktop/uni/lab_info/lab_info/liste",
+      "program": "c:/Users/User/Desktop/uni/lab_info/lab_info/liste/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

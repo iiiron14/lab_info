@@ -80,6 +80,24 @@ int list_equal(struct list *l1, struct list *l2) {
    (liberando anche la memoria con la free()) tutti i nodi che
    contengono k, se ce ne sono */
 struct list *list_delete_k(struct list *L, int k) {
+    struct list *app = NULL;
+    struct list *current;
+    // if the k value is first (one or more occurences)
+    while(L != NULL && L->val == k){
+        app = L->next;
+        free(L);
+        L = app;
+    }
+    // if the k value is in the body or the tail
+    current = L;
+    while(current != NULL){
+        if(current->next != NULL && (current->next)->val == k){
+            app = current->next;
+            current->next = (current->next)->next;
+            free(app);
+        }
+        current = current->next;
+    }
     return L;
 }
 
@@ -101,6 +119,13 @@ int test(void) {
 
     int resc[] = {100, 200, 300};
     struct list *lresc = list_from_array(resc, sizeof(resc) / sizeof(resc[0]));
+
+    /* printf("lista a:\n");
+    list_print(la);
+    printf("\nlista b:\n");
+    list_print(lb);
+    printf("\nlista c:\n");
+    list_print(lc); */
 
     return list_equal(list_delete_k(la, 10), lresa) &&
            list_equal(list_delete_k(lb, 2), lresb) &&

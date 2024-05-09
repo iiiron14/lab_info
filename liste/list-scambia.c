@@ -84,7 +84,20 @@ int list_equal(struct list *l1, struct list *l2) {
    meno di due elementi, non fa nulla. La funzione NON DEVE creare
    nuovi nodi, ma deve modificare opportunamente i puntatori 'next'
    dei nodi esistenti. */
-void scambia(struct list *la, struct list *lb) {}
+void scambia(struct list *la, struct list *lb) {
+    if(la == NULL || la->next == NULL || lb == NULL || lb->next == NULL)
+        return;
+    struct list *pna = la;
+    struct list *pnb = lb;
+    while((pna->next)->next != NULL)
+        pna = pna->next;
+    while((pnb->next)->next != NULL)
+        pnb = pnb->next;
+    struct list *app = pna->next;
+    pna->next = pnb->next;
+    pnb->next = app;
+
+}
 
 int test(void) {
     int a[] = {10, 20, 30, 40, 50};
@@ -110,9 +123,27 @@ int test(void) {
 
     int resd[] = {4};
     struct list *lresd = list_from_array(resd, sizeof(resd) / sizeof(resd[0]));
+    printf("lista a:\n");
+    list_print(la);
+    printf("lista b:\n");
+    list_print(lb);
+    printf("lista c:\n");
+    list_print(lc);
+    printf("lista d:\n");
+    list_print(ld);
 
     scambia(la, lb);
     scambia(lc, ld); /* Qui non deve accadere nulla */
+    printf("-------------------------------------\n");
+
+    printf("lista a:\n");
+    list_print(la);
+    printf("lista b:\n");
+    list_print(lb);
+    printf("lista c:\n");
+    list_print(lc);
+    printf("lista d:\n");
+    list_print(ld);
 
     return list_equal(la, lresa) && list_equal(lb, lresb) &&
            list_equal(lc, lresc) && list_equal(ld, lresd);

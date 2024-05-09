@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TRUE 1
+
 struct list {
     int val;
     struct list *next;
@@ -40,7 +42,40 @@ struct list *list_from_array(int v[], int n);
    funzione che supera i test non e' necessariamente corretta.
 */
 void rimuovi_centrali(struct list *L) {
-    // TODO
+    int size = list_length(L);
+    int position = 1; // per tenere traccia del nodo in cui ci si trova
+    struct list *l1 = L; // per iterare tra i nodi
+    struct list *l2 = NULL;    // per tenere traccia del nodo che precede l1 nei dispari, o di due nei pari
+    struct list *app1; // variabile di appoggio
+    struct list *app2; // variabile di appoggio aggiuntiva necessaria per la casistica size pari
+    if(size % 2){ // dispari
+        while(TRUE){
+            if(position == ((size / 2) + 1)){
+                app1 = l1;
+                l2->next = l1->next;
+                free(app1);
+                return;
+            }
+            l2 = l1;
+            l1 = l1->next;
+            position++;
+        }
+    }
+    else{   // pari
+        while(TRUE){
+            if(position == size/2){
+                app1 = l1;
+                app2 = l1->next;
+                l2->next = (l1->next)->next;
+                free(app1);
+                free(app2);
+                return;
+            }
+            l2 = l1;
+            l1 = l1->next;
+            position++;
+        }
+    }
 }
 
 /**

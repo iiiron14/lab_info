@@ -13,12 +13,20 @@ void stampa(struct persona p) {
 
 // Restituisce true se la stringa dst è la radice del nome della persona
 int match(struct persona src, char *dst) {
-    // TODO
+    int i = 0;
+    for(i = 0; *(dst + i) != '\0'; i++)
+        if( *(dst + i) != *(src.nome + i) ||  *(src.nome + i) == '\0')
+            return 0;
+    return 1;
 }
 
 // Conta le persone che matchano con la radice
 int count(struct persona *rubrica, int N, char *prefix) {
-    // TODO
+    int tot = 0;
+    for(int i = 0; i < N; i++)
+        if(match(rubrica[i], prefix))
+            tot++;
+    return tot;
 }
 
 int main(void) {
