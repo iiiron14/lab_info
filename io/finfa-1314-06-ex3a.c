@@ -50,7 +50,28 @@ void print_array(int *a, int size);
 
     */
 
-int f(FILE *in, FILE *out, char c, char *s) { return 0; }
+int f(FILE *in, FILE *out, char c, char *s){
+    int n=0;
+    char a;
+    while((a = fgetc(in)) != EOF){
+        if(a == c){
+            for(char *b = s; *b; b++){
+                if(fputc(*b, out) == EOF){
+                    perror("\nError in substituting");
+                    return n;
+                }
+            }
+            n++;
+        }
+        else{
+            if(fputc(a, out) == EOF){
+                perror("\nError in writing");
+                return n;
+            }
+        }
+    }
+    return n;
+}
 
 int main(int argc, char **argv) {
     if (argc != 3) {

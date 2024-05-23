@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define INPUT_FILE "input-formattato.txt"
-#define OUTPUT_FILE "output-formattato.txt"
+#define INPUT_FILE "C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\input-formattato.txt"
+#define OUTPUT_FILE "C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\output-formattato.txt"
 
 /**
  * Implementare la funzione sottostante che deve leggere dal file
@@ -17,27 +17,24 @@
  *     int fprintf(FILE *stream, const char *format, ...);
  */
 void f() {
-    int line=3, intero;
-    char str[3];
+    int intero;
+    char str[4];
     char c;
     FILE *fp;
-    if((fp = fopen("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\input-formattato.txt", "r")) == NULL){
-        printf("\nerrore apertura %s", "input-formattato.txt");
-        exit(1);
+    if((fp = fopen(INPUT_FILE, "r")) == NULL){
+        perror("\nerrore apertura input file");
+        return;
     }
     FILE *out;
-    if((out = fopen("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\output-formattato.txt", "w")) == NULL){
-        fprintf(stderr, "\nerrore apertura %s", "output-formattato.txt");
-        exit(1);
+    if((out = fopen(OUTPUT_FILE, "w")) == NULL){
+        perror("\nerrore apertura output file");
+        return;
     }
-    while(line == 3){
-        line = 0;
-        if((line += fscanf(fp, "%3[^,],", str)) != 1)
-            break;
-        line += fscanf(fp, "%d,", &intero);
-        line += fscanf(fp, "%c\n", &c);
-        // printf("\nstr: %.3s, intero: %d, carattere: %c\n", str, intero, c);
-        fprintf(out, "%5d,%c,%.3s\n", intero, c, str);
+    while(fscanf(fp, "%3s,%5d,%c\n", str, &intero, &c) != EOF){
+        if(fprintf(out, "%5d,%c,%3s\n", intero, c, str) == EOF){
+            perror("\nScrittura fallita");
+            return;
+        }
     }
     fclose(fp);
     fclose(out);
@@ -46,7 +43,7 @@ void f() {
 int main() {
     f();
     FILE *fp;
-    if ((fp = fopen("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\output-formattato.txt", "rb")) == NULL) {
+    if ((fp = fopen(OUTPUT_FILE, "rb")) == NULL) {
         perror("TEST FAILURE");
         exit(1);
     }
@@ -61,12 +58,12 @@ int main() {
     char *expected = " 2011,z,aaa\n99999,y,bbb\n    0,x,ccc\n";
     buffer[fsize] = '\0';
     if (strcmp(buffer, expected) != 0) {
-        fprintf(stderr, "TEST FAILURE.\nExpected: \"\n%s\n\"\nActual: \"\n%s\n\"\n", expected, buffer);
+        fprintf(stderr, "TEST FAILURE.\nExpected: \"\n\%s\n\"\nActual: \"\n%s\n\"\n", expected, buffer);
         printf("%d", buffer[fsize - 1]);
         exit(1);
     }
     fclose(fp);
-    remove("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\output-formattato.txt");
+    remove(OUTPUT_FILE);
     printf("TEST SUCCESS.\n");
     return 0;
 }
