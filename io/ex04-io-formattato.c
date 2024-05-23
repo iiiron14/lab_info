@@ -17,13 +17,36 @@
  *     int fprintf(FILE *stream, const char *format, ...);
  */
 void f() {
-    // TODO
+    int line=3, intero;
+    char str[3];
+    char c;
+    FILE *fp;
+    if((fp = fopen("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\input-formattato.txt", "r")) == NULL){
+        printf("\nerrore apertura %s", "input-formattato.txt");
+        exit(1);
+    }
+    FILE *out;
+    if((out = fopen("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\output-formattato.txt", "w")) == NULL){
+        fprintf(stderr, "\nerrore apertura %s", "output-formattato.txt");
+        exit(1);
+    }
+    while(line == 3){
+        line = 0;
+        if((line += fscanf(fp, "%3[^,],", str)) != 1)
+            break;
+        line += fscanf(fp, "%d,", &intero);
+        line += fscanf(fp, "%c\n", &c);
+        // printf("\nstr: %.3s, intero: %d, carattere: %c\n", str, intero, c);
+        fprintf(out, "%5d,%c,%.3s\n", intero, c, str);
+    }
+    fclose(fp);
+    fclose(out);
 }
 
 int main() {
     f();
     FILE *fp;
-    if ((fp = fopen(OUTPUT_FILE, "rb")) == NULL) {
+    if ((fp = fopen("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\output-formattato.txt", "rb")) == NULL) {
         perror("TEST FAILURE");
         exit(1);
     }
@@ -38,12 +61,12 @@ int main() {
     char *expected = " 2011,z,aaa\n99999,y,bbb\n    0,x,ccc\n";
     buffer[fsize] = '\0';
     if (strcmp(buffer, expected) != 0) {
-        fprintf(stderr, "TEST FAILURE.\nExpected: \"\n\%s\n\"\nActual: \"\n%s\n\"\n", expected, buffer);
+        fprintf(stderr, "TEST FAILURE.\nExpected: \"\n%s\n\"\nActual: \"\n%s\n\"\n", expected, buffer);
         printf("%d", buffer[fsize - 1]);
         exit(1);
     }
     fclose(fp);
-    remove(OUTPUT_FILE);
+    remove("C:\\Users\\User\\Desktop\\uni\\lab_info\\io\\output-formattato.txt");
     printf("TEST SUCCESS.\n");
     return 0;
 }

@@ -29,9 +29,6 @@ int f(FILE *fp) {
         for(int m= 0; m< j.k; m++)
             fputc(j.c, f);
         fclose(f);
-        /* for(int m=0;m< j.k;m++)
-            fwrite(&(j.c), sizeof(char), 1, f); */
-        fclose(f);
         i++;
     }
     return i;
